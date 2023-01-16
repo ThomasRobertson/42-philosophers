@@ -18,13 +18,10 @@ NAME= philo
 
 # CC= clang
 CFLAGS= -Wall -Werror -Wextra -g3 $(INCLUDE) -fsanitize=address
-LDFLAGS= -L$(LIBFT_DIR) -fsanitize=address
+LDFLAGS= -fsanitize=address
 DEPFLAGS= -MT $@ -MMD -MP -MF $(DEP_DIR)$*.d
 
-INCLUDE = -I$(INCLUDE_DIR) -I$(LIBFT_DIR)
-
-LIBFT_DIR= libft
-LIBFT_LIB= $(LIBFT_DIR)/libft.a
+INCLUDE = -I$(INCLUDE_DIR)
 
 INCLUDE_DIR= include
 OBJ_DIR= obj/
@@ -105,40 +102,21 @@ HEADER_NORM =		@echo "${COLOR_PURPLE}\
 					\n/* ************************************************************************** */\n\
 					${COLOR_END}"
 
-HEADER_ENTERLIB =	@echo "${COLOR_GREEN}\
-					\n/* ************************************************************************** */\
-					\n/*                               ENTERING LIBFT                               */\
-					\n/* ************************************************************************** */\n\
-					${COLOR_END}"
-
-HEADER_EXITLIB =	@echo "${COLOR_GREEN}\
-					\n/* ************************************************************************** */\
-					\n/*                                EXITING LIB                                 */\
-					\n/* ************************************************************************** */\n\
-					${COLOR_END}"
-
 # **************************************************************************** #
 #                                    RULES                                     #
 # **************************************************************************** #
 
 all: $(NAME)
 
-$(NAME): $(LIBFT_LIB) $(OBJ)
+$(NAME): $(OBJ)
 	$(HEADER)
 	$(HEADER_COMPIL)
 	$(CC) -o $@ $(OBJ) $(LDFLAGS) $(LIBFT_LIB)
 
-malloc_test: $(LIBFT_LIB) $(OBJ)
-	$(CC) $(CFLAGS) $(LDFLAGS) -fsanitize=undefined -rdynamic -o $@ $(OBJ) $(LIBFT_LIB) -L. -lmallocator
+malloc_test: $(OBJ)
+	$(CC) $(CFLAGS) $(LDFLAGS) -fsanitize=undefined -rdynamic -o $@ $(OBJ) -L. -lmallocator
 
 bonus: $(NAME)
-
-$(LIBFT_LIB): makelibf ;
-
-makelibf :
-	$(HEADER_ENTERLIB)
-	@make -C $(LIBFT_DIR)
-	$(HEADER_EXITLIB)
 
 $(OBJ): | $(OBJ_DIR)
 
@@ -166,15 +144,9 @@ cleanobj:
 cleanobjdir: cleanobj
 	rm -rf $(OBJ_DIR)
 
-clean: header cleanobjdir cleanlibft
-	
-cleanlibft:
-	make -C $(LIBFT_DIR) clean
+clean: header cleanobjdir
 
-fcleanlibft:
-	make -C $(LIBFT_DIR) fclean
-
-fclean: header clean fcleanlibft
+fclean: header clean
 	${HEADER_FCLEAN}
 	rm -f $(NAME) $(NAME_BONUS)
 
@@ -185,15 +157,13 @@ reobj: cleanobj
 
 norm: header
 	${HEADER_NORM}
-	@echo "$(COLOR_GREEN)"
-	-python3 -m norminette $(LIBFT_DIR) | awk "!/: OK!/"
 	@echo "$(COLOR_CYAN)"
 	-python3 -m norminette $(SRC_DIR)
 	@echo "$(COLOR_PURPLE)"
 	-python3 -m norminette $(INCLUDE_DIR)
 	@echo "$(COLOR_END)"
 
-.PHONY: all clean fclean re reobj norm header makelibf cleanobj cleanobjdir fcleanlibft bonus
+.PHONY: all clean fclean re reobj norm header cleanobj bonus
 
 # include $(DEP)
 

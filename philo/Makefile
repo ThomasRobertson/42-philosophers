@@ -17,22 +17,29 @@
 NAME= philo
 
 # CC= clang
-CFLAGS= -Wall -Werror -Wextra -g3 $(INCLUDE) -fsanitize=address
-LDFLAGS= -fsanitize=address
+CFLAGS= -Wall -Werror -Wextra -g3 -pthread $(INCLUDE) #-fsanitize=thread
+LDFLAGS= -pthread #-fsanitize=thread
 DEPFLAGS= -MT $@ -MMD -MP -MF $(DEP_DIR)$*.d
 
 INCLUDE = -I$(INCLUDE_DIR)
 
-INCLUDE_DIR= include
+INCLUDE_DIR= inc
 OBJ_DIR= obj/
 SRC_DIR= src/
 DEP_DIR= dep/
+
 # **************************************************************************** #
 #                                .C & .H FILES                                 #
 # **************************************************************************** #
 
 SRC_FILE=	\
-			main.c
+			clean.c \
+			ft_atoi.c \
+			main.c \
+			monitor.c \
+			philo.c \
+			routine.c \
+			utils.c
 
 SRC=		$(addprefix $(SRC_DIR), $(SRC_FILE))
 OBJ_FILE= 	$(SRC_FILE:.c=.o)
@@ -108,23 +115,30 @@ HEADER_NORM =		@echo "${COLOR_PURPLE}\
 
 all: $(NAME)
 
-$(NAME): $(OBJ)
+$(NAME):
 	$(HEADER)
-	$(HEADER_COMPIL)
-	$(CC) -o $@ $(OBJ) $(LDFLAGS) $(LIBFT_LIB)
+	@echo -n "${COLOR_YELLOW}Compiling : \n[${COLOR_END}"
+	@$(MAKE) --no-print-directory obj_rule
+	@echo -n "${COLOR_YELLOW}]\n\n${COLOR_END}"
+	@echo -n "${COLOR_GREEN}Linking : "
+	@$(CC) -o $@ $(OBJ) $(LDFLAGS) $(LIBFT_LIB)
+	@echo "${COLOR_GREEN}Done. ${COLOR_END}"
 
 malloc_test: $(OBJ)
 	$(CC) $(CFLAGS) $(LDFLAGS) -fsanitize=undefined -rdynamic -o $@ $(OBJ) -L. -lmallocator
 
 bonus: $(NAME)
 
+obj_rule : $(OBJ)
+
 $(OBJ): | $(OBJ_DIR)
 
 $(OBJ_DIR):
-	mkdir -p $@
+	@mkdir -p $@
 
 $(OBJ): $(OBJ_DIR)%.o: $(SRC_DIR)%.c
-	$(CC) $(CFLAGS) -c $< -o $@
+	@echo -n "${COLOR_YELLOW}#${COLOR_END}"
+	@$(CC) $(CFLAGS) -c $< -o $@
 
 # $(DEP): | $(DEP_DIR)
 # 
@@ -163,7 +177,7 @@ norm: header
 	-python3 -m norminette $(INCLUDE_DIR)
 	@echo "$(COLOR_END)"
 
-.PHONY: all clean fclean re reobj norm header cleanobj bonus
+.PHONY: all clean fclean re reobj norm header cleanobj bonus obj_rule
 
 # include $(DEP)
 

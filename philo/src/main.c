@@ -6,7 +6,7 @@
 /*   By: troberts <troberts@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 18:16:35 by troberts          #+#    #+#             */
-/*   Updated: 2023/02/01 00:11:17 by troberts         ###   ########.fr       */
+/*   Updated: 2023/02/04 17:32:44 by troberts         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,8 @@ int	main(int ac, char **av)
 			main.philo_struct);
 	main.monitor_args.common = main.common;
 	main.monitor_args.philo_struct = main.philo_struct;
-	main.pid_threads[main.common.nbr_philosophers] = launch_monitor(main.philo_struct,
+	main.pid_threads[main.common.nbr_philosophers]
+		= launch_monitor(main.philo_struct,
 			main.common, &main.monitor_args);
 	i = 0;
 	while (i < main.common.nbr_philosophers)

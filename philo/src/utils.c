@@ -6,7 +6,7 @@
 /*   By: troberts <troberts@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 18:52:17 by troberts          #+#    #+#             */
-/*   Updated: 2023/01/27 04:00:33 by troberts         ###   ########.fr       */
+/*   Updated: 2023/02/04 06:26:43 by troberts         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,4 +29,14 @@ int	get_time(void)
 int	get_time_since_start(t_common common)
 {
 	return (get_time() - common.time.start_time);
+}
+
+int	check_is_dead(t_is_dead	is_dead)
+{
+	int	return_code;
+
+	pthread_mutex_lock(&(is_dead.lock));
+	return_code = *(is_dead.value);
+	pthread_mutex_unlock(&(is_dead.lock));
+	return (return_code);
 }

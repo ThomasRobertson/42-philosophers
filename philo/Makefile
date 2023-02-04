@@ -64,26 +64,27 @@ COLOR_CYAN		= \033[0;36m
 COLOR_WHITE		= \033[0;37m
 COLOR_END		= \033[m
 
-HEADER =			@echo "${COLOR_CYAN}\
-					\n/* ************************************************************************** */\
-					\n/*                                                                            */\
-					\n/*            :::      ::::::::                                               */\
-					\n/*          :+:      :+:    :+:                                               */\
-					\n/*        +:+ +:+         +:${HEADER_NAME}*/\
-					\n/*      +\#+  +:+       +\#+                                                    */\
-					\n/*    +\#+\#+\#+\#+\#+   +\#+                       Thomas Robertson                */\
-					\n/*         \#+\#    \#+\#                     <troberts@student.42.fr>            */\
-					\n/*        \#\#\#   \#\#\#\#\#\#\#\#.fr                                                   */\
-					\n/*                                                                            */\
-					\n/* ************************************************************************** */\
-					\n \
-					\n \
-					\n NAME: $(NAME) \
-					\n \
-					\n CC: $(CC) \
-					\n CFLAGS: $(CFLAGS) \
-					\n LDFLAGS: $(LDFLAGS) \
-					\n${COLOR_END}"
+HEADER =		@echo "${COLOR_CYAN}\
+				\n/* ************************************************************************** */\
+				\n/*                                                                            */\
+				\n/*            :::      ::::::::                                               */\
+				\n/*          :+:      :+:    :+:                                               */\
+				\n/*        +:+ +:+         +:${HEADER_NAME}*/\
+				\n/*      +\#+  +:+       +\#+                                                    */\
+				\n/*    +\#+\#+\#+\#+\#+   +\#+                       Thomas Robertson                */\
+				\n/*         \#+\#    \#+\#                     <troberts@student.42.fr>            */\
+				\n/*        \#\#\#   \#\#\#\#\#\#\#\#.fr                                                   */\
+				\n/*                                                                            */\
+				\n/* ************************************************************************** */\
+				\n \
+				\n${COLOR_END}"
+
+HEADER_VAR =	@echo "${COLOR_CYAN}\
+				BINARY NAME: $(NAME) \
+				\n CC: $(CC) \
+				\n CFLAGS: $(CFLAGS) \
+				\n LDFLAGS: $(LDFLAGS) \
+				\n${COLOR_END}"
 
 HEADER_COMPIL =	@echo "${COLOR_YELLOW}\
 					\n/* ************************************************************************** */\
@@ -115,21 +116,23 @@ HEADER_NORM =		@echo "${COLOR_PURPLE}\
 
 all: $(NAME)
 
-$(NAME):
-	$(HEADER)
+$(NAME): FORCE header
+	$(HEADER_VAR)
 	@echo -n "${COLOR_YELLOW}Compiling : \n[${COLOR_END}"
-	@$(MAKE) --no-print-directory obj_rule
+	@$(MAKE) --no-print-directory --silent $(OBJ)
 	@echo -n "${COLOR_YELLOW}]\n\n${COLOR_END}"
 	@echo -n "${COLOR_GREEN}Linking : "
 	@$(CC) -o $@ $(OBJ) $(LDFLAGS) $(LIBFT_LIB)
 	@echo "${COLOR_GREEN}Done. ${COLOR_END}"
+
+FORCE: ;
 
 malloc_test: $(OBJ)
 	$(CC) $(CFLAGS) $(LDFLAGS) -fsanitize=undefined -rdynamic -o $@ $(OBJ) -L. -lmallocator
 
 bonus: $(NAME)
 
-obj_rule : $(OBJ)
+#obj_rule : $(OBJ)
 
 $(OBJ): | $(OBJ_DIR)
 
@@ -141,28 +144,31 @@ $(OBJ): $(OBJ_DIR)%.o: $(SRC_DIR)%.c
 	@$(CC) $(CFLAGS) -c $< -o $@
 
 # $(DEP): | $(DEP_DIR)
-# 
+
 # $(DEP_DIR):
 # 	mkdir -p $@
-# 
+
 # $(DEP): $(SRC_DIR)%.c
-# 	$(CC) $(CFLAGS) -MM -MF $@ -MT $(OBJ_DIR)$*.o $<
-# 
+# 	$(CC) $(DEPFLAGS) $(CFLAGS) -o $@
+
 header:
 	$(HEADER)
 
 cleanobj:
-	${HEADER_CLEAN}
-	rm -f $(OBJ) $(OBJ_BONUS) $(OBJ_COMMON)
+	@rm -f $(OBJ)
 
 cleanobjdir: cleanobj
-	rm -rf $(OBJ_DIR)
+	@rm -rf $(OBJ_DIR)
 
-clean: header cleanobjdir
+clean: header
+	@echo "${COLOR_RED}Removing objects.${COLOR_END}"
+	@$(MAKE) --no-print-directory --silent cleanobj
+	@echo "${COLOR_RED}Removing object directory.${COLOR_END}"
+	@$(MAKE) --no-print-directory --silent cleanobjdir
 
-fclean: header clean
-	${HEADER_FCLEAN}
-	rm -f $(NAME) $(NAME_BONUS)
+fclean: clean
+	@echo "${COLOR_RED}Removing binary file.\n${COLOR_END}"
+	@rm -f $(NAME) $(NAME_BONUS)
 
 re: header fclean all
 
@@ -170,12 +176,11 @@ reobj: cleanobj
 	make -C .
 
 norm: header
-	${HEADER_NORM}
-	@echo "$(COLOR_CYAN)"
+	@echo -n "$(COLOR_GREEN)"
 	-python3 -m norminette $(SRC_DIR)
 	@echo "$(COLOR_PURPLE)"
 	-python3 -m norminette $(INCLUDE_DIR)
-	@echo "$(COLOR_END)"
+	@echo -n "$(COLOR_END)"
 
 .PHONY: all clean fclean re reobj norm header cleanobj bonus obj_rule
 
@@ -196,4 +201,4 @@ norm: header
 # ... (other rules etc.)
 # 
 # #This below has to be at the end of the Makefile, else it does not work
-# -include $(dep)
+-include $(DEP_FILE)

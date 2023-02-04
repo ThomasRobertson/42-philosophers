@@ -10,7 +10,7 @@ jobs:
       with:
         submodules: true
     - name: Compiling using GCC
-      run: make re
+      run: cd philo && make re
       env:
         CC: gcc
 

@@ -15,6 +15,6 @@ jobs:
         CC: gcc
 
     - name: Compiling using Clang
-      run: make re
+      run: cd philo && make re
       env:
         CC: clang

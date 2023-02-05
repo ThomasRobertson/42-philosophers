@@ -6,23 +6,22 @@
 /*   By: troberts <troberts@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 02:13:20 by troberts          #+#    #+#             */
-/*   Updated: 2023/02/05 02:35:16 by troberts         ###   ########.fr       */
+/*   Updated: 2023/02/05 19:12:48 by troberts         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo_bonus.h"
 
-void	philo_sleep(t_philo *data)
+void	philo_sleep(t_philo data)
 {
-	pthread_mutex_lock(data->common.output);
-	if (!*(data->common.is_dead))
-		printf("%d %d is sleeping\n", get_time_since_start(data->common),
-			data->philo_id);
-	pthread_mutex_unlock(data->common.output);
-	usleep(data->common.time.time_to_sleep * 1000);
+	sem_wait(data.output_lock);
+	printf("%d %d is sleeping\n", get_time_since_start(data.common),
+		data.philo_id);
+	sem_post(data.output_lock);
+	usleep(data.common.time.time_to_sleep * 1000);
 }
 
-int	philo_eat(t_philo *data)
+int	philo_eat(t_philo data)
 {
 	pthread_mutex_lock(&(data->fork_right->fork));
 	if (data->fork_right->fork_is_used)
@@ -70,7 +69,7 @@ int	philo_eat(t_philo *data)
 	return (RETURN_SUCCESS);
 }
 
-void	philo_think(t_philo *data)
+void	philo_think(t_philo data)
 {
 	int	time_to_think;
 
@@ -89,33 +88,28 @@ void	philo_think(t_philo *data)
 	usleep(time_to_think * 1000);
 }
 
-void	think_and_eat(t_philo *data)
+void	think_and_eat(t_philo data)
 {
 	while (!*(data->common.is_dead) && philo_eat(data) != RETURN_SUCCESS)
 		philo_think(data);
 }
 
-int	continue_loop(t_philo *data)
+int	continue_loop(t_philo data)
 {
 	int	return_code;
 
 	return_code = RETURN_SUCCESS;
-	pthread_mutex_lock(&data->update_status);
-	if (*(data->common.is_dead))
+	if (*(data->common.is_dead)) // Todo: supervise if dead
 		return_code = RETURN_FAILURE;
 	if (data->common.nbr_meals_to_eat != -1)
 		if (data->nbr_meals_eaten >= data->common.nbr_meals_to_eat)
 			return_code = RETURN_FAILURE;
-	pthread_mutex_unlock(&data->update_status);
 	return (return_code);
 }
 
-void	*philo_routine(void *data)
+int	philo_routine(t_philo philo)
 {
-	t_philo	*philo;
-
-	philo = (t_philo *)data;
-	if (philo->philo_id % 2 == 0)
+	if (philo.philo_id % 2 == 0)
 		usleep(SMALL_WAIT);
 	while (continue_loop(philo) == RETURN_SUCCESS)
 	{

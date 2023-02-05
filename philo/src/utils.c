@@ -6,7 +6,7 @@
 /*   By: troberts <troberts@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 18:52:17 by troberts          #+#    #+#             */
-/*   Updated: 2023/02/04 06:26:43 by troberts         ###   ########.fr       */
+/*   Updated: 2023/02/05 23:17:25 by troberts         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,4 +39,21 @@ int	check_is_dead(t_is_dead	is_dead)
 	return_code = *(is_dead.value);
 	pthread_mutex_unlock(&(is_dead.lock));
 	return (return_code);
+}
+
+int	check_args(t_common common, int ac)
+{
+	if (common.nbr_philosophers < 1)
+		return (RETURN_FAILURE);
+	if (common.time.time_to_die < 0)
+		return (RETURN_FAILURE);
+	if (common.time.time_to_eat < 0)
+		return (RETURN_FAILURE);
+	if (common.time.time_to_sleep < 0)
+		return (RETURN_FAILURE);
+	if (common.nbr_meals_to_eat == -1 && ac == 6)
+		return (RETURN_FAILURE);
+	if (common.nbr_meals_to_eat == 0 && ac == 5)
+		return (RETURN_FAILURE);
+	return (RETURN_SUCCESS);
 }

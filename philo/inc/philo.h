@@ -6,7 +6,7 @@
 /*   By: troberts <troberts@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 00:13:56 by troberts          #+#    #+#             */
-/*   Updated: 2023/02/04 17:20:47 by troberts         ###   ########.fr       */
+/*   Updated: 2023/02/05 23:17:15 by troberts         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,5 +107,6 @@ void				*philo_routine(void *data);
 void				giving_up(void);
 int					get_time(void);
 int					get_time_since_start(t_common common);
+int					check_args(t_common common, int ac);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: troberts <troberts@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 18:16:35 by troberts          #+#    #+#             */
-/*   Updated: 2023/02/04 17:32:44 by troberts         ###   ########.fr       */
+/*   Updated: 2023/02/05 23:37:29 by troberts         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,8 @@ int	main(int ac, char **av)
 		return (EXIT_FAILURE);
 	main.is_dead = false;
 	main.common = fill_args(ac, av, &main.is_dead, &main.output);
+	if (check_args(main.common, ac) == RETURN_FAILURE)
+		return (EXIT_SUCCESS);
 	main.forks = create_forks(main.common.nbr_philosophers);
 	if (main.forks == NULL)
 		return (EXIT_FAILURE);

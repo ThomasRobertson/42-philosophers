@@ -6,7 +6,7 @@
 /*   By: troberts <troberts@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 01:56:20 by troberts          #+#    #+#             */
-/*   Updated: 2023/02/05 17:07:20 by troberts         ###   ########.fr       */
+/*   Updated: 2023/02/05 21:28:41 by troberts         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,10 @@
 pid_t	create_one_philo(t_philo philo)
 {
 	pid_t	thread_id;
-	int		return_child_code;
 
 	thread_id = fork();
 	if (thread_id == 0)
-	{
-		return_child_code = philo_routine(philo);
-		exit(return_child_code);
-	}
+		philo_routine(philo);
 	else
 		return (thread_id);
 	return (thread_id);

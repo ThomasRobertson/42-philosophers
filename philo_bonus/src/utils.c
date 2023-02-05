@@ -6,7 +6,7 @@
 /*   By: troberts <troberts@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 18:52:17 by troberts          #+#    #+#             */
-/*   Updated: 2023/02/05 02:35:16 by troberts         ###   ########.fr       */
+/*   Updated: 2023/02/05 22:30:03 by troberts         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,12 +31,29 @@ int	get_time_since_start(t_common common)
 	return (get_time() - common.time.start_time);
 }
 
-int	check_is_dead(t_is_dead	is_dead)
+void	check_stop_simulation(t_philo *philo)
 {
-	int	return_code;
+	(void)philo;
+	int	time_to_usleep;
 
-	pthread_mutex_lock(&(is_dead.lock));
-	return_code = *(is_dead.value);
-	pthread_mutex_unlock(&(is_dead.lock));
-	return (return_code);
+	// printf("nbr_meals_to_eat %i\nphilo.nbr_meals_eaten %i\n", philo->common.nbr_meals_to_eat, philo->nbr_meals_eaten);
+	if (philo->common.nbr_meals_to_eat != -1
+		&& philo->nbr_meals_eaten >= philo->common.nbr_meals_to_eat)
+		exit(NO_MORE_MEALS);
+	if (philo->time_of_last_meal != -1 && get_time_since_start(philo->common)
+		- philo->time_of_last_meal >= philo->common.time.time_to_die)
+	{
+		time_to_usleep = philo->time_of_last_meal
+			+ philo->common.time.time_to_die
+			- get_time_since_start(philo->common);
+		if (time_to_usleep < 0)
+			time_to_usleep = 0;
+		usleep(time_to_usleep * 1000);
+		sem_wait(philo->output_lock);
+		printf("%d %d died\n", get_time_since_start(philo->common),
+			philo->philo_id);
+		exit(DEAD_PHILO);
+	}
+	// printf("I'm returning.\n");
+	return ;
 }

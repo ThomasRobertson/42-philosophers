@@ -1,0 +1,117 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: troberts <troberts@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/01/17 18:16:35 by troberts          #+#    #+#             */
+/*   Updated: 2023/02/05 02:35:16 by troberts         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "philo_bonus.h"
+
+t_philo	*create_philo_struct(t_fork *forks, t_common common)
+{
+	t_philo			*struct_philo;
+	int				i;
+
+	struct_philo = malloc(sizeof(*struct_philo) * common.nbr_philosophers);
+	if (struct_philo == NULL)
+	{
+		printf("Error: malloc() failed");
+		return (NULL);
+	}
+	i = 0;
+	while (i < common.nbr_philosophers)
+	{
+		struct_philo[i].philo_id = i + 1;
+		struct_philo[i].fork_left = &forks[i];
+		if (struct_philo[i].philo_id == common.nbr_philosophers)
+			struct_philo[i].fork_right = &forks[0];
+		else
+			struct_philo[i].fork_right = &forks[i + 1];
+		struct_philo[i].time_of_last_meal = -1;
+		struct_philo[i].nbr_meals_eaten = 0;
+		struct_philo[i].common = common;
+		pthread_mutex_init(&struct_philo[i].update_status, NULL);
+		i++;
+	}
+	return (struct_philo);
+}
+
+t_common	fill_args(int ac, char **av, t_bool *is_dead,
+		pthread_mutex_t *output)
+{
+	t_common	common;
+	t_time_data	time_data;
+
+	pthread_mutex_init(output, NULL);
+	common.output = output;
+	common.nbr_philosophers = ft_atoi(av[1]);
+	time_data.time_to_die = ft_atoi(av[2]);
+	time_data.time_to_eat = ft_atoi(av[3]);
+	time_data.time_to_sleep = ft_atoi(av[4]);
+	if (ac == 6)
+		common.nbr_meals_to_eat = ft_atoi(av[5]);
+	else
+		common.nbr_meals_to_eat = -1;
+	time_data.start_time = get_time();
+	common.is_dead = is_dead;
+	common.time = time_data;
+	common.nbr_philo_meals_finished = 0;
+	return (common);
+}
+
+sem_t	create_fork(int number_philosophers)
+{
+	t_fork	forks;
+	int		i;
+
+	if (forks == NULL)
+	{
+		printf("Error: malloc() failed");
+		return (NULL);
+	}
+	i = 0;
+	while (i < number_philosophers)
+	{
+		pthread_mutex_init(&forks[i].fork, NULL);
+		forks[i].fork_is_used = false;
+		i++;
+	}
+	return (forks);
+}
+
+int	main(int ac, char **av)
+{
+	t_main	main;
+	int		i;
+
+	if (ac < 5 || ac > 6)
+		return (EXIT_FAILURE);
+	main.is_dead = false;
+	main.common = fill_args(ac, av, &main.is_dead, &main.output);
+	main.forks = create_forks(main.common.nbr_philosophers);
+	if (main.forks == NULL)
+		return (EXIT_FAILURE);
+	main.philo_struct = create_philo_struct(main.forks, main.common);
+	if (main.philo_struct == NULL)
+		return (EXIT_FAILURE);
+	main.pid_threads = launch_philos(main.common.nbr_philosophers,
+			main.philo_struct);
+	main.monitor_args.common = main.common;
+	main.monitor_args.philo_struct = main.philo_struct;
+	main.pid_threads[main.common.nbr_philosophers]
+		= launch_monitor(main.philo_struct,
+			main.common, &main.monitor_args);
+	i = 0;
+	while (i < main.common.nbr_philosophers)
+	{
+		pthread_join(main.pid_threads[i], NULL);
+		i++;
+	}
+	pthread_join(main.pid_threads[main.common.nbr_philosophers], NULL);
+	return (EXIT_SUCCESS);
+}

@@ -36,7 +36,6 @@ SRC_FILE=	\
 			clean.c \
 			ft_atoi.c \
 			main.c \
-			monitor.c \
 			philo.c \
 			routine.c \
 			utils.c

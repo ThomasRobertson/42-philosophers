@@ -6,7 +6,7 @@
 /*   By: troberts <troberts@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 00:13:56 by troberts          #+#    #+#             */
-/*   Updated: 2023/02/05 22:52:00 by troberts         ###   ########.fr       */
+/*   Updated: 2023/02/05 22:52:58 by troberts         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 # define PHILO_BONUS_H
 
 # include "define.h"
-//# include <pthread.h>
 # include <stdio.h>
 # include <stdlib.h>
 # include <string.h>
@@ -45,12 +44,6 @@ typedef struct s_time_data
 	int				start_time;
 }					t_time_data;
 
-// typedef struct s_is_dead
-// {
-// 	t_bool			*value;
-// 	pthread_mutex_t	lock;
-// }					t_is_dead;
-
 typedef struct s_common
 {
 	t_bool			*is_dead;
@@ -59,8 +52,6 @@ typedef struct s_common
 	int				nbr_philosophers;
 	t_time_data		time;
 }					t_common;
-
-// typedef sem_t	t_fork;
 
 typedef struct s_philo
 {
@@ -73,33 +64,11 @@ typedef struct s_philo
 	sem_t			*output_lock;
 }					t_philo;
 
-// typedef struct s_monitor
-// {
-// 	t_common		common;
-// 	t_philo			*philo_struct;
-// }					t_monitor;
-
-// typedef struct s_main
-// {
-// 	t_common		common;
-// 	t_bool			is_dead;
-// 	t_fork			*forks;
-// 	t_philo			*philo_struct;
-// 	pthread_t		*pid_threads;
-// 	pthread_mutex_t	output;
-// 	t_monitor		monitor_args;
-// }					t_main;
-
 // CLEAN
 void				clean_philos(t_philo philo);
 
 // FT_ATOI
 int					ft_atoi(const char *str);
-
-// MONITOR
-// void				*monitor(void *data);
-// pthread_t			launch_monitor(t_philo *philo_struct, t_common common,
-// 						t_monitor *monitor_args);
 
 // PHILO
 pid_t				*launch_philos(t_philo philo);
@@ -108,7 +77,6 @@ pid_t				*launch_philos(t_philo philo);
 void				philo_routine(t_philo philo);
 
 // UTILS
-void				giving_up(void);
 int					get_time(void);
 int					get_time_since_start(t_common common);
 void				check_stop_simulation(t_philo *philo);

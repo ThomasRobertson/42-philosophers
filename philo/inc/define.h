@@ -6,7 +6,7 @@
 /*   By: troberts <troberts@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 00:16:58 by troberts          #+#    #+#             */
-/*   Updated: 2023/01/23 01:50:49 by troberts         ###   ########.fr       */
+/*   Updated: 2023/02/05 23:36:21 by troberts         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,6 @@
 
 # ifndef RETURN_FAILURE
 #  define RETURN_FAILURE EXIT_FAILURE
-# endif
-
-# ifndef RETURN_ERROR
-#  define RETURN_ERROR -1
 # endif
 
 # ifndef T_BOOL

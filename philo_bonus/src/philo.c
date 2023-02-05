@@ -6,39 +6,46 @@
 /*   By: troberts <troberts@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 01:56:20 by troberts          #+#    #+#             */
-/*   Updated: 2023/02/05 02:35:16 by troberts         ###   ########.fr       */
+/*   Updated: 2023/02/05 17:07:20 by troberts         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo_bonus.h"
 
-pthread_t	create_one_philo(t_philo *args)
+pid_t	create_one_philo(t_philo philo)
 {
-	pthread_t	thread_id;
+	pid_t	thread_id;
+	int		return_child_code;
 
-	if (pthread_create(&thread_id, NULL, &philo_routine, args))
+	thread_id = fork();
+	if (thread_id == 0)
 	{
-		printf("Error: pthread_create() failed");
-		return (RETURN_ERROR);
+		return_child_code = philo_routine(philo);
+		exit(return_child_code);
 	}
+	else
+		return (thread_id);
 	return (thread_id);
 }
 
-pthread_t	*launch_philos(int number_philosophers, t_philo *philos)
+pid_t	*launch_philos(t_philo philo)
 {
-	pthread_t	*philos_pid;
-	int			i;
+	pid_t	*philos_pid;
+	int		nbr_philosophers;
+	int		i;
 
-	philos_pid = malloc(sizeof(*philos_pid) * (number_philosophers + 1));
+	nbr_philosophers = philo.common.nbr_philosophers;
+	philos_pid = malloc(sizeof(*philos_pid) * nbr_philosophers);
 	if (philos_pid == NULL)
 	{
 		printf("Error: malloc() failed");
 		return (NULL);
 	}
 	i = 0;
-	while (i < number_philosophers)
+	while (i < nbr_philosophers)
 	{
-		philos_pid[i] = create_one_philo(&philos[i]);
+		philo.philo_id = i + 1;
+		philos_pid[i] = create_one_philo(philo);
 		i++;
 	}
 	return (philos_pid);

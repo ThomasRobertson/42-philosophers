@@ -6,7 +6,7 @@
 /*   By: troberts <troberts@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 02:13:20 by troberts          #+#    #+#             */
-/*   Updated: 2023/02/05 00:49:18 by troberts         ###   ########.fr       */
+/*   Updated: 2023/02/05 20:08:01 by troberts         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,9 +56,11 @@ int	philo_eat(t_philo *data)
 			data->philo_id);
 	}
 	pthread_mutex_unlock(data->common.output);
-	usleep(data->common.time.time_to_eat * 1000);
 	pthread_mutex_lock(&(data->update_status));
 	data->time_of_last_meal = get_time_since_start(data->common);
+	pthread_mutex_unlock(&(data->update_status));
+	usleep(data->common.time.time_to_eat * 1000);
+	pthread_mutex_lock(&(data->update_status));
 	data->nbr_meals_eaten++;
 	pthread_mutex_unlock(&(data->update_status));
 	pthread_mutex_lock(&(data->fork_left->fork));
@@ -75,7 +77,7 @@ void	philo_think(t_philo *data)
 	int	time_to_think;
 
 	time_to_think = (data->time_of_last_meal + data->common.time.time_to_die
-			- data->common.time.time_to_eat - data->common.time.time_to_sleep
+			- data->common.time.time_to_sleep
 			- get_time_since_start(data->common)) / 2;
 	if (time_to_think < 0)
 		time_to_think = 0;
@@ -115,6 +117,13 @@ void	*philo_routine(void *data)
 	t_philo	*philo;
 
 	philo = (t_philo *)data;
+	if (pthread_mutex_lock(philo->common.output) != RETURN_SUCCESS)
+		giving_up();
+	if (!*(philo->common.is_dead))
+		printf("%d %d is thinking\n", get_time_since_start(philo->common),
+			philo->philo_id);
+	if (pthread_mutex_unlock(philo->common.output) != RETURN_SUCCESS)
+		giving_up();
 	if (philo->philo_id % 2 == 0)
 		usleep(SMALL_WAIT);
 	while (continue_loop(philo) == RETURN_SUCCESS)

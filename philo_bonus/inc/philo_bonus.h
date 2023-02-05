@@ -6,7 +6,7 @@
 /*   By: troberts <troberts@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 00:13:56 by troberts          #+#    #+#             */
-/*   Updated: 2023/02/05 16:49:33 by troberts         ###   ########.fr       */
+/*   Updated: 2023/02/05 18:59:01 by troberts         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@
 # define SMALL_WAIT	100
 
 # define SEM_NAME_FORK "philo_sem_42"
+# define SEM_NAME_OUTPUT "philo_sem_output"
 
 typedef struct s_time_data
 {
@@ -66,7 +67,7 @@ typedef struct s_philo
 	int				nbr_meals_eaten;
 	sem_t			*forks;
 	t_common		common;
-	pthread_mutex_t	update_status;
+	sem_t			*output_lock;
 }					t_philo;
 
 typedef struct s_monitor

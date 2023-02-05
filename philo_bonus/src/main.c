@@ -6,20 +6,26 @@
 /*   By: troberts <troberts@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 18:16:35 by troberts          #+#    #+#             */
-/*   Updated: 2023/02/05 16:56:04 by troberts         ###   ########.fr       */
+/*   Updated: 2023/02/05 19:06:43 by troberts         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo_bonus.h"
 
-sem_t	*create_fork(int number_philosophers)
+void	create_semaphors(int number_philosophers, sem_t **forks, sem_t **output)
 {
 	sem_t	*forks;
 
-	forks = sem_open(SEM_NAME_FORK, O_CREAT, S_IRUSR | S_IWUSR, number_philosophers);
-	if (forks == SEM_FAILED)
+	*forks = sem_open(SEM_NAME_FORK, O_CREAT, S_IRUSR | S_IWUSR, number_philosophers);
+	if (*forks == SEM_FAILED)
 		exit(EXIT_FAILURE);
-	return (forks);
+	*output = sem_open(SEM_NAME_OUTPUT, O_CREAT, S_IRUSR | S_IWUSR, 1);
+	if (*output == SEM_FAILED)
+	{
+		sem_destroy(*forks);
+		sem_unlink(SEM_NAME_FORK);
+		exit(EXIT_FAILURE);
+	}
 }
 
 t_philo	create_philo_struct(int ac, char **av)
@@ -42,7 +48,7 @@ t_philo	create_philo_struct(int ac, char **av)
 	philo.common = common;
 	philo.nbr_meals_eaten = 0;
 	philo.time_of_last_meal = -1;
-	philo.forks = create_fork(common.nbr_philosophers);
+	create_semaphors(common.nbr_philosophers, &philo.forks, &philo.output_lock);
 	return (philo);
 }
 

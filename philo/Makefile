@@ -38,6 +38,7 @@ SRC_FILE=	\
 			main.c \
 			monitor.c \
 			philo.c \
+			routine_utils.c \
 			routine.c \
 			utils.c
 

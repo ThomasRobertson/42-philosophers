@@ -6,7 +6,7 @@
 /*   By: troberts <troberts@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 02:13:20 by troberts          #+#    #+#             */
-/*   Updated: 2023/02/05 20:08:01 by troberts         ###   ########.fr       */
+/*   Updated: 2023/02/06 00:25:34 by troberts         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,38 +24,9 @@ void	philo_sleep(t_philo *data)
 
 int	philo_eat(t_philo *data)
 {
-	pthread_mutex_lock(&(data->fork_right->fork));
-	if (data->fork_right->fork_is_used)
-	{
-		pthread_mutex_unlock(&(data->fork_right->fork));
-		usleep(SMALL_WAIT);
+	if (take_forks(data) == RETURN_FAILURE)
 		return (RETURN_FAILURE);
-	}
-	data->fork_right->fork_is_used = true;
-	pthread_mutex_unlock(&(data->fork_right->fork));
-	pthread_mutex_lock(&(data->fork_left->fork));
-	if (data->fork_left->fork_is_used)
-	{
-		pthread_mutex_lock(&(data->fork_right->fork));
-		data->fork_right->fork_is_used = false;
-		pthread_mutex_unlock(&(data->fork_left->fork));
-		pthread_mutex_unlock(&(data->fork_right->fork));
-		usleep(SMALL_WAIT);
-		return (RETURN_FAILURE);
-	}
-	data->fork_left->fork_is_used = true;
-	pthread_mutex_unlock(&(data->fork_left->fork));
-	pthread_mutex_lock(data->common.output);
-	if (!*(data->common.is_dead))
-	{
-		printf("%d %d has taken a fork\n", get_time_since_start(data->common),
-			data->philo_id);
-		printf("%d %d has taken a fork\n", get_time_since_start(data->common),
-			data->philo_id);
-		printf("%d %d is eating\n", get_time_since_start(data->common),
-			data->philo_id);
-	}
-	pthread_mutex_unlock(data->common.output);
+	output_eat(data);
 	pthread_mutex_lock(&(data->update_status));
 	data->time_of_last_meal = get_time_since_start(data->common);
 	pthread_mutex_unlock(&(data->update_status));
@@ -95,21 +66,6 @@ void	think_and_eat(t_philo *data)
 {
 	while (!*(data->common.is_dead) && philo_eat(data) != RETURN_SUCCESS)
 		philo_think(data);
-}
-
-int	continue_loop(t_philo *data)
-{
-	int	return_code;
-
-	return_code = RETURN_SUCCESS;
-	pthread_mutex_lock(&data->update_status);
-	if (*(data->common.is_dead))
-		return_code = RETURN_FAILURE;
-	if (data->common.nbr_meals_to_eat != -1)
-		if (data->nbr_meals_eaten >= data->common.nbr_meals_to_eat)
-			return_code = RETURN_FAILURE;
-	pthread_mutex_unlock(&data->update_status);
-	return (return_code);
 }
 
 void	*philo_routine(void *data)

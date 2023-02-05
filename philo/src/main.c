@@ -6,7 +6,7 @@
 /*   By: troberts <troberts@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 18:16:35 by troberts          #+#    #+#             */
-/*   Updated: 2023/02/05 23:37:29 by troberts         ###   ########.fr       */
+/*   Updated: 2023/02/06 00:08:10 by troberts         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,10 +85,22 @@ t_fork	*create_forks(int number_philosophers)
 	return (forks);
 }
 
+void	join_threads(pthread_t *pid_threads, int nbr_philosophers)
+{
+	int	i;
+
+	i = 0;
+	while (i < nbr_philosophers)
+	{
+		pthread_join(pid_threads[i], NULL);
+		i++;
+	}
+	pthread_join(pid_threads[nbr_philosophers], NULL);
+}
+
 int	main(int ac, char **av)
 {
 	t_main	main;
-	int		i;
 
 	if (ac < 5 || ac > 6)
 		return (EXIT_FAILURE);
@@ -104,17 +116,8 @@ int	main(int ac, char **av)
 		return (EXIT_FAILURE);
 	main.pid_threads = launch_philos(main.common.nbr_philosophers,
 			main.philo_struct);
-	main.monitor_args.common = main.common;
-	main.monitor_args.philo_struct = main.philo_struct;
 	main.pid_threads[main.common.nbr_philosophers]
-		= launch_monitor(main.philo_struct,
-			main.common, &main.monitor_args);
-	i = 0;
-	while (i < main.common.nbr_philosophers)
-	{
-		pthread_join(main.pid_threads[i], NULL);
-		i++;
-	}
-	pthread_join(main.pid_threads[main.common.nbr_philosophers], NULL);
+		= launch_monitor(&main.philo_struct, &main.common, &main.monitor_args);
+	join_threads(main.pid_threads, main.common.nbr_philosophers);
 	return (EXIT_SUCCESS);
 }

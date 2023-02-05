@@ -6,7 +6,7 @@
 /*   By: troberts <troberts@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 00:13:56 by troberts          #+#    #+#             */
-/*   Updated: 2023/02/05 23:17:15 by troberts         ###   ########.fr       */
+/*   Updated: 2023/02/06 00:25:14 by troberts         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@
 # define NO_MORE_MEALS 2
 
 # define SMALL_WAIT	100
+
+# define STOP_SIMULATION 1
 
 typedef struct s_time_data
 {
@@ -71,8 +73,8 @@ typedef struct s_philo
 
 typedef struct s_monitor
 {
-	t_common		common;
-	t_philo			*philo_struct;
+	t_common		*common;
+	t_philo			**philo_struct;
 }					t_monitor;
 
 typedef struct s_main
@@ -94,11 +96,16 @@ int					ft_atoi(const char *str);
 
 // MONITOR
 void				*monitor(void *data);
-pthread_t			launch_monitor(t_philo *philo_struct, t_common common,
+pthread_t			launch_monitor(t_philo **philo_struct, t_common *common,
 						t_monitor *monitor_args);
 
 // PHILO
 pthread_t			*launch_philos(int number_philosophers, t_philo *philos);
+
+// ROUTINE UTILS
+int					continue_loop(t_philo *data);
+int					take_forks(t_philo *data);
+void				output_eat(t_philo *data);
 
 // ROUTINE
 void				*philo_routine(void *data);

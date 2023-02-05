@@ -6,7 +6,7 @@
 /*   By: troberts <troberts@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 23:52:57 by troberts          #+#    #+#             */
-/*   Updated: 2023/02/05 00:46:33 by troberts         ###   ########.fr       */
+/*   Updated: 2023/02/05 01:07:50 by troberts         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,6 @@ void	*monitor(void *data)
 				i++;
 			}
 		}
-		usleep(1000);
 	}
 	return (NULL);
 }

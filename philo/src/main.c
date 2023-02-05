@@ -6,7 +6,7 @@
 /*   By: troberts <troberts@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 18:16:35 by troberts          #+#    #+#             */
-/*   Updated: 2023/02/06 00:08:10 by troberts         ###   ########.fr       */
+/*   Updated: 2023/02/06 00:51:03 by troberts         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,12 +112,16 @@ int	main(int ac, char **av)
 	if (main.forks == NULL)
 		return (EXIT_FAILURE);
 	main.philo_struct = create_philo_struct(main.forks, main.common);
-	if (main.philo_struct == NULL)
-		return (EXIT_FAILURE);
 	main.pid_threads = launch_philos(main.common.nbr_philosophers,
 			main.philo_struct);
+	if (main.pid_threads == NULL)
+	{
+		clean_philos(main.philo_struct, main.pid_threads, main.forks);
+		return (EXIT_FAILURE);
+	}
 	main.pid_threads[main.common.nbr_philosophers]
 		= launch_monitor(&main.philo_struct, &main.common, &main.monitor_args);
 	join_threads(main.pid_threads, main.common.nbr_philosophers);
+	clean_philos(main.philo_struct, main.pid_threads, main.forks);
 	return (EXIT_SUCCESS);
 }

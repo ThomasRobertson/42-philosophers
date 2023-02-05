@@ -6,7 +6,7 @@
 /*   By: troberts <troberts@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 01:56:20 by troberts          #+#    #+#             */
-/*   Updated: 2023/02/05 23:37:08 by troberts         ###   ########.fr       */
+/*   Updated: 2023/02/06 00:50:55 by troberts         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ pthread_t	*launch_philos(int number_philosophers, t_philo *philos)
 	pthread_t	*philos_pid;
 	int			i;
 
+	if (philos == NULL)
+		return (NULL);
 	philos_pid = malloc(sizeof(*philos_pid) * (number_philosophers + 1));
 	if (philos_pid == NULL)
 	{

@@ -6,7 +6,7 @@
 /*   By: troberts <troberts@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 18:52:17 by troberts          #+#    #+#             */
-/*   Updated: 2023/02/05 22:53:02 by troberts         ###   ########.fr       */
+/*   Updated: 2023/02/06 00:35:09 by troberts         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,8 @@ int	get_time_since_start(t_common common)
 
 void	check_stop_simulation(t_philo *philo)
 {
-	(void)philo;
 	int	time_to_usleep;
 
-	// printf("nbr_meals_to_eat %i\nphilo.nbr_meals_eaten %i\n", philo->common.nbr_meals_to_eat, philo->nbr_meals_eaten);
 	if (philo->common.nbr_meals_to_eat != -1
 		&& philo->nbr_meals_eaten >= philo->common.nbr_meals_to_eat)
 		exit(NO_MORE_MEALS);
@@ -48,6 +46,5 @@ void	check_stop_simulation(t_philo *philo)
 			philo->philo_id);
 		exit(DEAD_PHILO);
 	}
-	// printf("I'm returning.\n");
 	return ;
 }

@@ -6,7 +6,7 @@
 /*   By: troberts <troberts@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 02:13:20 by troberts          #+#    #+#             */
-/*   Updated: 2023/02/05 22:29:45 by troberts         ###   ########.fr       */
+/*   Updated: 2023/02/06 00:34:52 by troberts         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,7 @@ void	philo_sleep(t_philo *data)
 int	philo_eat(t_philo *data)
 {
 	check_stop_simulation(data);
-	// int sem_value;
-	// sem_getvalue(data->forks, &sem_value);
-	// printf("trying to take a fork %i %i\n", data->philo_id, sem_value);
 	sem_wait(data->forks);
-	// printf("I have one fork ! %i\n", data->philo_id);
 	sem_wait(data->forks);
 	sem_wait(data->output_lock);
 	printf("%d %d has taken a fork\n", get_time_since_start(data->common),
@@ -70,8 +66,6 @@ void	philo_routine(t_philo philo)
 		usleep(1000);
 	while (1)
 	{
-		// check_stop_simulation(&philo);
-		// printf("trying to eat\n");
 		philo_eat(&philo);
 		philo_sleep(&philo);
 		philo_think(&philo);

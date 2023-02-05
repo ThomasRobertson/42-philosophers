@@ -6,7 +6,7 @@
 /*   By: troberts <troberts@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 18:16:35 by troberts          #+#    #+#             */
-/*   Updated: 2023/02/05 22:49:28 by troberts         ###   ########.fr       */
+/*   Updated: 2023/02/05 23:10:56 by troberts         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,27 +31,40 @@ void	create_semaphors(int number_philosophers, sem_t **forks, sem_t **output)
 	}
 }
 
+int	check_args(char	*str)
+{
+	int	nbr;
+
+	nbr = ft_atoi(str);
+	if (nbr < 0)
+	{
+		printf("Error: arg < 0.\n");
+		exit(EXIT_FAILURE);
+	}
+	return (nbr);
+}
+
 t_philo	create_philo_struct(int ac, char **av)
 {
 	t_philo		philo;
 	t_common	common;
 	t_time_data	time_data;
 
-	common.nbr_philosophers = ft_atoi(av[1]);
-	time_data.time_to_die = ft_atoi(av[2]);
-	time_data.time_to_eat = ft_atoi(av[3]);
-	time_data.time_to_sleep = ft_atoi(av[4]);
+	common.nbr_philosophers = check_args(av[1]);
+	time_data.time_to_die = check_args(av[2]);
+	time_data.time_to_eat = check_args(av[3]);
+	time_data.time_to_sleep = check_args(av[4]);
 	if (ac == 6)
-		common.nbr_meals_to_eat = ft_atoi(av[5]);
+		common.nbr_meals_to_eat = check_args(av[5]);
 	else
 		common.nbr_meals_to_eat = -1;
-	time_data.start_time = get_time();
-	common.time = time_data;
 	common.nbr_philo_meals_finished = 0;
-	philo.common = common;
 	philo.nbr_meals_eaten = 0;
 	philo.time_of_last_meal = -1;
 	create_semaphors(common.nbr_philosophers, &philo.forks, &philo.output_lock);
+	time_data.start_time = get_time();
+	common.time = time_data;
+	philo.common = common;
 	return (philo);
 }
 

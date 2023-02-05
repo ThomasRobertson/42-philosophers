@@ -22,6 +22,7 @@
 obj/
 *.a
 *.log
+malloc_test
 
 # Specific files
 philo/philo

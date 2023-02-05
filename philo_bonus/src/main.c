@@ -6,11 +6,21 @@
 /*   By: troberts <troberts@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 18:16:35 by troberts          #+#    #+#             */
-/*   Updated: 2023/02/05 16:52:54 by troberts         ###   ########.fr       */
+/*   Updated: 2023/02/05 16:56:04 by troberts         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo_bonus.h"
+
+sem_t	*create_fork(int number_philosophers)
+{
+	sem_t	*forks;
+
+	forks = sem_open(SEM_NAME_FORK, O_CREAT, S_IRUSR | S_IWUSR, number_philosophers);
+	if (forks == SEM_FAILED)
+		exit(EXIT_FAILURE);
+	return (forks);
+}
 
 t_philo	create_philo_struct(int ac, char **av)
 {
@@ -34,16 +44,6 @@ t_philo	create_philo_struct(int ac, char **av)
 	philo.time_of_last_meal = -1;
 	philo.forks = create_fork(common.nbr_philosophers);
 	return (philo);
-}
-
-sem_t	*create_fork(int number_philosophers)
-{
-	sem_t	*forks;
-
-	forks = sem_open(SEM_NAME_FORK, O_CREAT, S_IRUSR | S_IWUSR, number_philosophers);
-	if (forks == SEM_FAILED)
-		exit(EXIT_FAILURE);
-	return (forks);
 }
 
 int	main(int ac, char **av)

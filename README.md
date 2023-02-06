@@ -30,7 +30,11 @@
   <a href="https://github.com/ThomasRobertson/42-philosophers/actions/workflows/norminette-action.yml">
     <img src="https://github.com/ThomasRobertson/42-philosophers/workflows/Norm Check/badge.svg"
          alt="Norminette Action">
-  </a> 
+  </a>
+  <a href="https://github.com/ThomasRobertson/42-philosophers/actions/workflows/ft_mallocator.yml">
+    <img src="https://github.com/ThomasRobertson/42-philosophers/workflows/ft_mallocator/badge.svg"
+         alt="ft_mallocator">
+  </a>   
 </p>
 
 <p align="center">

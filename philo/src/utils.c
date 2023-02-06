@@ -6,7 +6,7 @@
 /*   By: troberts <troberts@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 18:52:17 by troberts          #+#    #+#             */
-/*   Updated: 2023/02/06 01:37:48 by troberts         ###   ########.fr       */
+/*   Updated: 2023/02/06 02:29:59 by troberts         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,31 @@ int	check_is_dead(t_is_dead	is_dead)
 	return (return_code);
 }
 
-int	check_args(t_common common, int ac)
+int	is_all_digit(char *str)
 {
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (!ft_isdigit(str[i]))
+			return (RETURN_FAILURE);
+		i++;
+	}
+	return (RETURN_SUCCESS);
+}
+
+int	check_args(t_common common, int ac, char **av)
+{
+	int	i;
+
+	i = 1;
+	while (i < ac)
+	{
+		if (is_all_digit(av[i]) == RETURN_FAILURE)
+			return (RETURN_FAILURE);
+		i++;
+	}
 	if (common.nbr_philosophers < 1)
 		return (RETURN_FAILURE);
 	if (common.time.time_to_die < 0)

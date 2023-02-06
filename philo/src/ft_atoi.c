@@ -6,7 +6,7 @@
 /*   By: troberts <troberts@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/10 05:18:57 by troberts          #+#    #+#             */
-/*   Updated: 2023/01/24 02:20:37 by troberts         ###   ########.fr       */
+/*   Updated: 2023/02/06 01:42:55 by troberts         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static int	ft_isspace_static(int c)
 		return (0);
 }
 
-static int	ft_isdigit(int c)
+int	ft_isdigit(int c)
 {
 	if (c >= '0' && c <= '9')
 		return (2048);

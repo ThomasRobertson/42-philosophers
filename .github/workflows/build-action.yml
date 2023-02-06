@@ -18,3 +18,12 @@ jobs:
       run: cd philo && make re
       env:
         CC: clang
+    - name: Compiling using GCC (Bonus)
+      run: cd philo_bonus && make re
+      env:
+        CC: gcc
+
+    - name: Compiling using Clang (Bonus)
+      run: cd philo_bonus && make re
+      env:
+        CC: clang

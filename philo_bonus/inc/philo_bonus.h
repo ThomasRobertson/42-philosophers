@@ -6,7 +6,7 @@
 /*   By: troberts <troberts@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 00:13:56 by troberts          #+#    #+#             */
-/*   Updated: 2023/02/06 01:17:32 by troberts         ###   ########.fr       */
+/*   Updated: 2023/02/06 14:59:17 by troberts         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,7 @@ pid_t				*launch_philos(t_philo philo);
 
 // ROUTINE
 void				philo_routine(t_philo philo);
+void				routine_one_philo(t_philo philo);
 
 // UTILS
 int					get_time(void);

@@ -6,7 +6,7 @@
 /*   By: troberts <troberts@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/06 00:21:27 by troberts          #+#    #+#             */
-/*   Updated: 2023/02/06 00:26:05 by troberts         ###   ########.fr       */
+/*   Updated: 2023/02/06 02:44:34 by troberts         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,4 +66,20 @@ void	output_eat(t_philo *data)
 			data->philo_id);
 	}
 	pthread_mutex_unlock(data->common.output);
+}
+
+void	*routine_one_philo(void *data)
+{
+	t_philo	*philo;
+
+	philo = (t_philo *)data;
+	pthread_mutex_lock(&(philo->fork_right->fork));
+	philo->fork_right->fork_is_used = true;
+	pthread_mutex_unlock(&(philo->fork_right->fork));
+	printf("%d %d has taken a fork\n", get_time_since_start(philo->common),
+		philo->philo_id);
+	usleep(philo->common.time.time_to_die * 1000);
+	printf("%d %d died\n", get_time_since_start(philo->common),
+		philo->philo_id);
+	return (NULL);
 }

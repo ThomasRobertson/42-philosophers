@@ -6,7 +6,7 @@
 /*   By: troberts <troberts@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 23:52:57 by troberts          #+#    #+#             */
-/*   Updated: 2023/02/06 00:20:42 by troberts         ###   ########.fr       */
+/*   Updated: 2023/02/06 02:40:42 by troberts         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,8 @@ void	*monitor(void *data)
 	int			stop_simulation_return ;
 
 	monitor = (t_monitor *)data;
+	if (monitor->common->nbr_philosophers == 1)
+		return (NULL);
 	philo_struct = *(monitor->philo_struct);
 	while (!*(monitor->common->is_dead))
 	{

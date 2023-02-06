@@ -6,7 +6,7 @@
 /*   By: troberts <troberts@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 01:56:20 by troberts          #+#    #+#             */
-/*   Updated: 2023/02/06 00:50:55 by troberts         ###   ########.fr       */
+/*   Updated: 2023/02/06 02:43:57 by troberts         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,11 @@ pthread_t	*launch_philos(int number_philosophers, t_philo *philos)
 	{
 		printf("Error: malloc() failed");
 		return (NULL);
+	}
+	if (number_philosophers == 1)
+	{
+		pthread_create(&philos_pid[0], NULL, &routine_one_philo, &philos[0]);
+		return (philos_pid);
 	}
 	i = 0;
 	while (i < number_philosophers)

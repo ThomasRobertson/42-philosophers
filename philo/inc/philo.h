@@ -6,7 +6,7 @@
 /*   By: troberts <troberts@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 00:13:56 by troberts          #+#    #+#             */
-/*   Updated: 2023/02/06 01:43:32 by troberts         ###   ########.fr       */
+/*   Updated: 2023/02/06 02:44:10 by troberts         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,7 @@ pthread_t			*launch_philos(int number_philosophers, t_philo *philos);
 int					continue_loop(t_philo *data);
 int					take_forks(t_philo *data);
 void				output_eat(t_philo *data);
+void				*routine_one_philo(void *data);
 
 // ROUTINE
 void				*philo_routine(void *data);
@@ -115,6 +116,6 @@ void				*philo_routine(void *data);
 // UTILS
 int					get_time(void);
 int					get_time_since_start(t_common common);
-int					check_args(t_common common, int ac);
+int					check_args(t_common common, int ac, char **av);
 
 #endif

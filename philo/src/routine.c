@@ -6,7 +6,7 @@
 /*   By: troberts <troberts@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 02:13:20 by troberts          #+#    #+#             */
-/*   Updated: 2023/02/06 00:25:34 by troberts         ###   ########.fr       */
+/*   Updated: 2023/02/06 01:38:43 by troberts         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,13 +52,11 @@ void	philo_think(t_philo *data)
 			- get_time_since_start(data->common)) / 2;
 	if (time_to_think < 0)
 		time_to_think = 0;
-	if (pthread_mutex_lock(data->common.output) != RETURN_SUCCESS)
-		giving_up();
+	pthread_mutex_lock(data->common.output);
 	if (!*(data->common.is_dead))
 		printf("%d %d is thinking\n", get_time_since_start(data->common),
 			data->philo_id);
-	if (pthread_mutex_unlock(data->common.output) != RETURN_SUCCESS)
-		giving_up();
+	pthread_mutex_unlock(data->common.output);
 	usleep(time_to_think * 1000);
 }
 
@@ -73,13 +71,11 @@ void	*philo_routine(void *data)
 	t_philo	*philo;
 
 	philo = (t_philo *)data;
-	if (pthread_mutex_lock(philo->common.output) != RETURN_SUCCESS)
-		giving_up();
+	pthread_mutex_lock(philo->common.output);
 	if (!*(philo->common.is_dead))
 		printf("%d %d is thinking\n", get_time_since_start(philo->common),
 			philo->philo_id);
-	if (pthread_mutex_unlock(philo->common.output) != RETURN_SUCCESS)
-		giving_up();
+	pthread_mutex_unlock(philo->common.output);
 	if (philo->philo_id % 2 == 0)
 		usleep(SMALL_WAIT);
 	while (continue_loop(philo) == RETURN_SUCCESS)

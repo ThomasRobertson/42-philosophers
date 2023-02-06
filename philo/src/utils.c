@@ -6,17 +6,11 @@
 /*   By: troberts <troberts@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 18:52:17 by troberts          #+#    #+#             */
-/*   Updated: 2023/02/05 23:17:25 by troberts         ###   ########.fr       */
+/*   Updated: 2023/02/06 01:37:48 by troberts         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-
-void	giving_up(void)
-{
-	write(1, "I'm sorry, but I can't do this anymore.\nI'm giving up.\n", 56);
-	exit(EXIT_FAILURE);
-}
 
 int	get_time(void)
 {

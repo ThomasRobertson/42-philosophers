@@ -6,7 +6,7 @@
 /*   By: troberts <troberts@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 00:13:56 by troberts          #+#    #+#             */
-/*   Updated: 2023/02/06 00:51:39 by troberts         ###   ########.fr       */
+/*   Updated: 2023/02/06 01:43:32 by troberts         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,7 @@ void				clean_philos(t_philo *philos, pthread_t *threads_pid,
 
 // FT_ATOI
 int					ft_atoi(const char *str);
+int					ft_isdigit(int c);
 
 // MONITOR
 void				*monitor(void *data);
@@ -112,7 +113,6 @@ void				output_eat(t_philo *data);
 void				*philo_routine(void *data);
 
 // UTILS
-void				giving_up(void);
 int					get_time(void);
 int					get_time_since_start(t_common common);
 int					check_args(t_common common, int ac);

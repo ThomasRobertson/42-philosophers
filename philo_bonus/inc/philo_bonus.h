@@ -6,7 +6,7 @@
 /*   By: troberts <troberts@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 00:13:56 by troberts          #+#    #+#             */
-/*   Updated: 2023/02/06 14:59:17 by troberts         ###   ########.fr       */
+/*   Updated: 2023/02/06 15:41:43 by troberts         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ void				unlink_sem(void);
 
 // FT_ATOI
 int					ft_atoi(const char *str);
-
+int					ft_isdigit(int c);
 // PHILO
 pid_t				*launch_philos(t_philo philo);
 

@@ -6,7 +6,7 @@
 /*   By: troberts <troberts@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 18:16:35 by troberts          #+#    #+#             */
-/*   Updated: 2023/02/06 01:17:41 by troberts         ###   ########.fr       */
+/*   Updated: 2023/02/06 15:40:48 by troberts         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,15 @@ void	create_semaphors(int number_philosophers, sem_t **forks, sem_t **output)
 int	check_args(char	*str)
 {
 	int	nbr;
+	int	i;
 
+	i = 0;
+	while (str[i])
+	{
+		if (!ft_isdigit(str[i]))
+			exit(EXIT_FAILURE);
+		i++;
+	}
 	nbr = ft_atoi(str);
 	if (nbr < 0)
 	{

@@ -6,7 +6,7 @@
 /*   By: troberts <troberts@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 18:16:35 by troberts          #+#    #+#             */
-/*   Updated: 2023/02/06 00:34:29 by troberts         ###   ########.fr       */
+/*   Updated: 2023/02/06 01:17:41 by troberts         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,7 @@ int	main(int ac, char **av)
 	philo_struct = create_philo_struct(ac, av);
 	philos_pid = launch_philos(philo_struct);
 	wait_child(philo_struct, philos_pid);
-	clean_philos(philo_struct);
+	clean_philos(philo_struct, philos_pid);
+	unlink_sem();
 	return (EXIT_SUCCESS);
 }

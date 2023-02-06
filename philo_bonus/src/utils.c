@@ -6,7 +6,7 @@
 /*   By: troberts <troberts@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 18:52:17 by troberts          #+#    #+#             */
-/*   Updated: 2023/02/06 00:35:09 by troberts         ###   ########.fr       */
+/*   Updated: 2023/02/06 01:19:06 by troberts         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,10 @@ void	check_stop_simulation(t_philo *philo)
 
 	if (philo->common.nbr_meals_to_eat != -1
 		&& philo->nbr_meals_eaten >= philo->common.nbr_meals_to_eat)
+	{
+		clean_philos(*philo, philo->philos_pid);
 		exit(NO_MORE_MEALS);
+	}
 	if (philo->time_of_last_meal != -1 && get_time_since_start(philo->common)
 		- philo->time_of_last_meal >= philo->common.time.time_to_die)
 	{
@@ -44,7 +47,8 @@ void	check_stop_simulation(t_philo *philo)
 		sem_wait(philo->output_lock);
 		printf("%d %d died\n", get_time_since_start(philo->common),
 			philo->philo_id);
-		exit(DEAD_PHILO);
+		clean_philos(*philo, philo->philos_pid);
+		exit (DEAD_PHILO);
 	}
 	return ;
 }

@@ -6,7 +6,7 @@
 /*   By: troberts <troberts@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 00:13:56 by troberts          #+#    #+#             */
-/*   Updated: 2023/02/05 22:52:58 by troberts         ###   ########.fr       */
+/*   Updated: 2023/02/06 01:17:32 by troberts         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,10 +62,12 @@ typedef struct s_philo
 	sem_t			*forks;
 	t_common		common;
 	sem_t			*output_lock;
+	pid_t			*philos_pid;
 }					t_philo;
 
 // CLEAN
-void				clean_philos(t_philo philo);
+void				clean_philos(t_philo philo, pid_t *philos_pid);
+void				unlink_sem(void);
 
 // FT_ATOI
 int					ft_atoi(const char *str);

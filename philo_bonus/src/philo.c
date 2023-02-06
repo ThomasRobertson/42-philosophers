@@ -6,7 +6,7 @@
 /*   By: troberts <troberts@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 01:56:20 by troberts          #+#    #+#             */
-/*   Updated: 2023/02/05 21:28:41 by troberts         ###   ########.fr       */
+/*   Updated: 2023/02/06 01:15:37 by troberts         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ pid_t	*launch_philos(t_philo philo)
 		printf("Error: malloc() failed");
 		return (NULL);
 	}
+	philo.philos_pid = philos_pid;
 	i = 0;
 	while (i < nbr_philosophers)
 	{

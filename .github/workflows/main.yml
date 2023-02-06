@@ -17,7 +17,7 @@ jobs:
           directory: ./
           badge: ./output/badge.svg
           patterns: '**'
-          # ignore: 'node_modules'
+          ignore: "Makefile | *.md' | *.pdf"
 
       - name: Print the output
         run: |

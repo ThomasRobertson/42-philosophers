@@ -1,0 +1,38 @@
+name: ft_mallocator
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-22.04
+    steps:
+    - uses: actions/checkout@v3
+      with :
+        submodules: true
+
+    - name: Setting up the folder (Mandatory)
+      run: |
+          cd philo
+          git clone -n https://github.com/tmatis/ft_mallocator.git
+          cd ft_mallocator
+          git reset --hard 1d6d7e89ee45ddfde29d6b088383b684accb5fe7
+          echo "PROJECT_PATH=\"..\"" >> config.sh
+          echo "ARGS=\"4 800 200 200 7\"" >> config.sh
+          echo CHECK_LEAKS=1 >> config.sh
+    - name: Setting up the folder (Bonus)
+      run: |
+          cd philo_bonus
+          git clone -n https://github.com/tmatis/ft_mallocator.git
+          cd ft_mallocator
+          git reset --hard 1d6d7e89ee45ddfde29d6b088383b684accb5fe7
+          echo "PROJECT_PATH=\"..\"" >> config.sh
+          echo "ARGS=\"4 800 200 200 7\"" >> config.sh
+          echo CHECK_LEAKS=1 >> config.sh
+    - name: Running tester (mandatory)
+      run: cd philo && cd ft_mallocator && bash test.sh
+      env:
+        CC: clang
+    - name: Running tester (bonus)
+      run: cd philo_bonus && cd ft_mallocator && bash test.sh
+      env:
+        CC: clang

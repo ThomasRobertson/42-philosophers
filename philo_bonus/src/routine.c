@@ -6,7 +6,7 @@
 /*   By: troberts <troberts@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 02:13:20 by troberts          #+#    #+#             */
-/*   Updated: 2023/02/06 15:43:16 by troberts         ###   ########.fr       */
+/*   Updated: 2023/02/07 22:58:09 by troberts         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 void	philo_sleep(t_philo *data)
 {
-	check_stop_simulation(data);
 	sem_wait(data->output_lock);
 	printf("%d %d is sleeping\n", get_time_since_start(data->common),
 		data->philo_id);
@@ -24,7 +23,6 @@ void	philo_sleep(t_philo *data)
 
 int	philo_eat(t_philo *data)
 {
-	check_stop_simulation(data);
 	sem_wait(data->forks);
 	sem_wait(data->forks);
 	sem_wait(data->output_lock);
@@ -47,7 +45,6 @@ void	philo_think(t_philo *data)
 {
 	int	time_to_think;
 
-	check_stop_simulation(data);
 	time_to_think = (data->time_of_last_meal + data->common.time.time_to_die
 			- data->common.time.time_to_sleep
 			- get_time_since_start(data->common)) / 2;
@@ -82,6 +79,7 @@ void	philo_routine(t_philo philo)
 		philo_think(&philo);
 	while (1)
 	{
+		check_stop_simulation(&philo);
 		philo_eat(&philo);
 		philo_sleep(&philo);
 		philo_think(&philo);

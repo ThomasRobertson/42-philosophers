@@ -6,7 +6,7 @@
 /*   By: troberts <troberts@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 18:16:35 by troberts          #+#    #+#             */
-/*   Updated: 2023/02/06 01:43:24 by troberts         ###   ########.fr       */
+/*   Updated: 2023/02/07 22:46:05 by troberts         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ t_philo	*create_philo_struct(t_fork *forks, t_common common)
 			struct_philo[i].fork_right = &forks[0];
 		else
 			struct_philo[i].fork_right = &forks[i + 1];
-		struct_philo[i].time_of_last_meal = -1;
+		struct_philo[i].time_of_last_meal = 0;
 		struct_philo[i].nbr_meals_eaten = 0;
 		struct_philo[i].common = common;
 		pthread_mutex_init(&struct_philo[i].update_status, NULL);

@@ -6,7 +6,7 @@
 /*   By: troberts <troberts@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 18:16:35 by troberts          #+#    #+#             */
-/*   Updated: 2023/02/06 15:40:48 by troberts         ###   ########.fr       */
+/*   Updated: 2023/02/07 22:44:56 by troberts         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ t_philo	create_philo_struct(int ac, char **av)
 		common.nbr_meals_to_eat = -1;
 	common.nbr_philo_meals_finished = 0;
 	philo.nbr_meals_eaten = 0;
-	philo.time_of_last_meal = -1;
+	philo.time_of_last_meal = 0;
 	create_semaphors(common.nbr_philosophers, &philo.forks, &philo.output_lock);
 	time_data.start_time = get_time();
 	common.time = time_data;

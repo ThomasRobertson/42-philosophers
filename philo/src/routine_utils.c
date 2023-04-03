@@ -6,7 +6,7 @@
 /*   By: troberts <troberts@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/06 00:21:27 by troberts          #+#    #+#             */
-/*   Updated: 2023/04/03 03:43:02 by troberts         ###   ########.fr       */
+/*   Updated: 2023/04/03 03:44:17 by troberts         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,11 @@ int	continue_loop(t_philo *data)
 	int	return_code;
 
 	return_code = RETURN_SUCCESS;
-	pthread_mutex_lock(&data->update_status);
+	pthread_mutex_lock(data->common.output);
 	if (*(data->common.is_dead))
 		return_code = RETURN_FAILURE;
+	pthread_mutex_unlock(data->common.output);
+	pthread_mutex_lock(&data->update_status);
 	if (data->common.nbr_meals_to_eat != -1)
 		if (data->nbr_meals_eaten >= data->common.nbr_meals_to_eat)
 			return_code = RETURN_FAILURE;

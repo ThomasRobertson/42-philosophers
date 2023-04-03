@@ -6,7 +6,7 @@
 /*   By: troberts <troberts@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 18:52:17 by troberts          #+#    #+#             */
-/*   Updated: 2023/02/07 22:50:07 by troberts         ###   ########.fr       */
+/*   Updated: 2023/04/03 03:19:48 by troberts         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,4 +51,27 @@ void	check_stop_simulation(t_philo *philo)
 		exit (DEAD_PHILO);
 	}
 	return ;
+}
+
+void	ft_usleep(int time, t_philo *philo)
+{
+	int	time_to_usleep;
+
+	if (get_time_since_start(philo->common)
+		- philo->time_of_last_meal + (time / 1000) >= philo->common.time.time_to_die)
+	{
+		time_to_usleep = philo->time_of_last_meal
+			+ philo->common.time.time_to_die
+			- get_time_since_start(philo->common);
+		if (time_to_usleep < 0)
+			time_to_usleep = 0;
+		usleep(time_to_usleep * 1000);
+		sem_wait(philo->output_lock);
+		printf("%d %d died\n", get_time_since_start(philo->common),
+			philo->philo_id);
+		clean_philos(*philo, philo->philos_pid);
+		exit (DEAD_PHILO);
+	}
+	else
+		usleep(time);
 }

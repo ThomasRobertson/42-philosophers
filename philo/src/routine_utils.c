@@ -6,7 +6,7 @@
 /*   By: troberts <troberts@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/06 00:21:27 by troberts          #+#    #+#             */
-/*   Updated: 2023/02/06 02:44:34 by troberts         ###   ########.fr       */
+/*   Updated: 2023/04/03 03:43:02 by troberts         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	take_forks(t_philo *data)
 	if (data->fork_right->fork_is_used)
 	{
 		pthread_mutex_unlock(&(data->fork_right->fork));
-		usleep(SMALL_WAIT);
+		ft_usleep(SMALL_WAIT, data);
 		return (RETURN_FAILURE);
 	}
 	data->fork_right->fork_is_used = true;
@@ -45,7 +45,7 @@ int	take_forks(t_philo *data)
 		data->fork_right->fork_is_used = false;
 		pthread_mutex_unlock(&(data->fork_left->fork));
 		pthread_mutex_unlock(&(data->fork_right->fork));
-		usleep(SMALL_WAIT);
+		ft_usleep(SMALL_WAIT, data);
 		return (RETURN_FAILURE);
 	}
 	data->fork_left->fork_is_used = true;
@@ -78,7 +78,7 @@ void	*routine_one_philo(void *data)
 	pthread_mutex_unlock(&(philo->fork_right->fork));
 	printf("%d %d has taken a fork\n", get_time_since_start(philo->common),
 		philo->philo_id);
-	usleep(philo->common.time.time_to_die * 1000);
+	ft_usleep(philo->common.time.time_to_die * 1000, data);
 	printf("%d %d died\n", get_time_since_start(philo->common),
 		philo->philo_id);
 	return (NULL);

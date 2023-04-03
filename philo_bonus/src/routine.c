@@ -6,7 +6,7 @@
 /*   By: troberts <troberts@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 02:13:20 by troberts          #+#    #+#             */
-/*   Updated: 2023/02/07 22:58:09 by troberts         ###   ########.fr       */
+/*   Updated: 2023/04/03 03:00:19 by troberts         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	philo_sleep(t_philo *data)
 	printf("%d %d is sleeping\n", get_time_since_start(data->common),
 		data->philo_id);
 	sem_post(data->output_lock);
-	usleep(data->common.time.time_to_sleep * 1000);
+	ft_usleep(data->common.time.time_to_sleep * 1000, data);
 }
 
 int	philo_eat(t_philo *data)
@@ -34,7 +34,7 @@ int	philo_eat(t_philo *data)
 		data->philo_id);
 	sem_post(data->output_lock);
 	data->time_of_last_meal = get_time_since_start(data->common);
-	usleep(data->common.time.time_to_eat * 1000);
+	ft_usleep(data->common.time.time_to_eat * 1000, data);
 	sem_post(data->forks);
 	sem_post(data->forks);
 	data->nbr_meals_eaten++;
@@ -54,7 +54,7 @@ void	philo_think(t_philo *data)
 	printf("%d %d is thinking\n", get_time_since_start(data->common),
 		data->philo_id);
 	sem_post(data->output_lock);
-	usleep(time_to_think * 1000);
+	ft_usleep(time_to_think * 1000, data);
 }
 
 void	routine_one_philo(t_philo philo)

@@ -6,7 +6,7 @@
 /*   By: troberts <troberts@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 00:13:56 by troberts          #+#    #+#             */
-/*   Updated: 2023/02/06 15:41:43 by troberts         ###   ########.fr       */
+/*   Updated: 2023/04/03 03:19:53 by troberts         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,5 +83,6 @@ void				routine_one_philo(t_philo philo);
 int					get_time(void);
 int					get_time_since_start(t_common common);
 void				check_stop_simulation(t_philo *philo);
+void				ft_usleep(int time, t_philo *philo);
 
 #endif

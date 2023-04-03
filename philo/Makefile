@@ -40,6 +40,7 @@ SRC_FILE=	\
 			philo.c \
 			routine_utils.c \
 			routine.c \
+			sleep.c \
 			utils.c
 
 SRC=		$(addprefix $(SRC_DIR), $(SRC_FILE))

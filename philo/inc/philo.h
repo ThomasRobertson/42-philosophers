@@ -6,7 +6,7 @@
 /*   By: troberts <troberts@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 00:13:56 by troberts          #+#    #+#             */
-/*   Updated: 2023/02/06 02:44:10 by troberts         ###   ########.fr       */
+/*   Updated: 2023/04/03 02:41:05 by troberts         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@
 # define NO_MORE_MEALS 2
 
 # define SMALL_WAIT	100
+# define USLEEP_MAX_CYCLE_LENGHT 10000
 
 # define STOP_SIMULATION 1
 
@@ -112,6 +113,9 @@ void				*routine_one_philo(void *data);
 
 // ROUTINE
 void				*philo_routine(void *data);
+
+// SLEEP
+void				ft_usleep(useconds_t time, t_philo *data);
 
 // UTILS
 int					get_time(void);

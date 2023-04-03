@@ -6,7 +6,7 @@
 /*   By: troberts <troberts@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 02:13:20 by troberts          #+#    #+#             */
-/*   Updated: 2023/02/06 01:38:43 by troberts         ###   ########.fr       */
+/*   Updated: 2023/04/03 02:49:21 by troberts         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	philo_sleep(t_philo *data)
 		printf("%d %d is sleeping\n", get_time_since_start(data->common),
 			data->philo_id);
 	pthread_mutex_unlock(data->common.output);
-	usleep(data->common.time.time_to_sleep * 1000);
+	ft_usleep(data->common.time.time_to_sleep * 1000, data);
 }
 
 int	philo_eat(t_philo *data)
@@ -30,7 +30,7 @@ int	philo_eat(t_philo *data)
 	pthread_mutex_lock(&(data->update_status));
 	data->time_of_last_meal = get_time_since_start(data->common);
 	pthread_mutex_unlock(&(data->update_status));
-	usleep(data->common.time.time_to_eat * 1000);
+	ft_usleep(data->common.time.time_to_eat * 1000, data);
 	pthread_mutex_lock(&(data->update_status));
 	data->nbr_meals_eaten++;
 	pthread_mutex_unlock(&(data->update_status));
@@ -57,7 +57,7 @@ void	philo_think(t_philo *data)
 		printf("%d %d is thinking\n", get_time_since_start(data->common),
 			data->philo_id);
 	pthread_mutex_unlock(data->common.output);
-	usleep(time_to_think * 1000);
+	ft_usleep(time_to_think * 1000, data);
 }
 
 void	think_and_eat(t_philo *data)
@@ -77,7 +77,7 @@ void	*philo_routine(void *data)
 			philo->philo_id);
 	pthread_mutex_unlock(philo->common.output);
 	if (philo->philo_id % 2 == 0)
-		usleep(SMALL_WAIT);
+		ft_usleep(SMALL_WAIT, data);
 	while (continue_loop(philo) == RETURN_SUCCESS)
 	{
 		while (philo_eat(philo) != RETURN_SUCCESS)

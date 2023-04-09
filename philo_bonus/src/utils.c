@@ -6,7 +6,7 @@
 /*   By: troberts <troberts@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 18:52:17 by troberts          #+#    #+#             */
-/*   Updated: 2023/04/03 03:19:48 by troberts         ###   ########.fr       */
+/*   Updated: 2023/04/09 21:38:25 by troberts         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,8 @@ void	ft_usleep(int time, t_philo *philo)
 	int	time_to_usleep;
 
 	if (get_time_since_start(philo->common)
-		- philo->time_of_last_meal + (time / 1000) >= philo->common.time.time_to_die)
+		- philo->time_of_last_meal + (time / 1000)
+		>= philo->common.time.time_to_die)
 	{
 		time_to_usleep = philo->time_of_last_meal
 			+ philo->common.time.time_to_die

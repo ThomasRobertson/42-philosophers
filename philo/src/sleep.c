@@ -6,7 +6,7 @@
 /*   By: troberts <troberts@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 02:25:35 by troberts          #+#    #+#             */
-/*   Updated: 2023/04/09 21:05:15 by troberts         ###   ########.fr       */
+/*   Updated: 2023/04/09 21:37:01 by troberts         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,6 @@ void	ft_usleep(unsigned int time, t_philo *data)
 	int	target_time_ms;
 	int	i;
 
-/* 	usleep(time);
-	return ; */
 	i = 0;
 	start_time = get_time_since_start(data->common);
 	target_time_ms = time / 1000;
@@ -39,10 +37,6 @@ void	ft_usleep(unsigned int time, t_philo *data)
 			pthread_mutex_unlock(data->common.output);
 		}
 		usleep(SMALL_SLEEP);
- 		if (data->common.nbr_philosophers < 100)
-			usleep(SMALL_SLEEP);
-		else
-			usleep(LONG_SLEEP);
 		i++;
 	}
 }

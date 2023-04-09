@@ -6,7 +6,7 @@
 /*   By: troberts <troberts@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 00:13:56 by troberts          #+#    #+#             */
-/*   Updated: 2023/04/09 21:08:16 by troberts         ###   ########.fr       */
+/*   Updated: 2023/04/09 21:19:32 by troberts         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,5 +124,6 @@ void				ft_usleep(useconds_t time, t_philo *data);
 int					get_time(void);
 int					get_time_since_start(t_common common);
 int					check_args(t_common common, int ac, char **av);
+int					display_error_message(int fd, char *str, int return_code);
 
 #endif

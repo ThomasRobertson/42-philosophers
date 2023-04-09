@@ -6,7 +6,7 @@
 /*   By: troberts <troberts@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 00:13:56 by troberts          #+#    #+#             */
-/*   Updated: 2023/04/03 02:41:05 by troberts         ###   ########.fr       */
+/*   Updated: 2023/04/09 21:08:16 by troberts         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,9 @@
 
 # define SMALL_WAIT	100
 # define USLEEP_MAX_CYCLE_LENGHT 10000
+# define MAX_TIME_THINK 2000
+# define SMALL_SLEEP 100
+# define LONG_SLEEP 100
 
 # define STOP_SIMULATION 1
 

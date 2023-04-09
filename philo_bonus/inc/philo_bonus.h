@@ -6,7 +6,7 @@
 /*   By: troberts <troberts@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 00:13:56 by troberts          #+#    #+#             */
-/*   Updated: 2023/04/03 03:19:53 by troberts         ###   ########.fr       */
+/*   Updated: 2023/04/09 18:58:50 by troberts         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@
 # define NO_MORE_MEALS 2
 
 # define SMALL_WAIT	100
+# define MAX_TIME_THINK 2000
 
 # define SEM_NAME_FORK "/philo_sem_42"
 # define SEM_NAME_OUTPUT "/philo_sem_output"

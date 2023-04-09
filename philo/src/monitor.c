@@ -6,7 +6,7 @@
 /*   By: troberts <troberts@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 23:52:57 by troberts          #+#    #+#             */
-/*   Updated: 2023/02/07 22:46:36 by troberts         ###   ########.fr       */
+/*   Updated: 2023/04/09 21:11:27 by troberts         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ void	*monitor(void *data)
 	if (monitor->common->nbr_philosophers == 1)
 		return (NULL);
 	philo_struct = *(monitor->philo_struct);
-	while (!*(monitor->common->is_dead))
+	while (1)
 	{
 		i = 0;
 		while (i < monitor->common->nbr_philosophers)
@@ -88,6 +88,7 @@ void	*monitor(void *data)
 					philo_struct, &i) == RETURN_FAILURE)
 				return (NULL);
 		}
+		usleep(10);
 	}
 	return (NULL);
 }

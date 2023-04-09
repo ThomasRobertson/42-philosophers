@@ -17,7 +17,7 @@
 NAME= philo
 
 # CC= clang
-CFLAGS= -Wall -Werror -Wextra -g3 -pthread $(INCLUDE) #-fsanitize=thread
+CFLAGS= -Wall -Werror -Wextra -g3 -pthread $(INCLUDE) -O3 #-fsanitize=thread
 LDFLAGS= -pthread #-fsanitize=thread
 DEPFLAGS= -MT $@ -MMD -MP -MF $(DEP_DIR)$*.d
 

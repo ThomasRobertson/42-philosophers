@@ -6,7 +6,7 @@
 /*   By: troberts <troberts@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 02:13:20 by troberts          #+#    #+#             */
-/*   Updated: 2023/04/03 02:49:21 by troberts         ###   ########.fr       */
+/*   Updated: 2023/04/09 20:53:44 by troberts         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,8 @@ void	philo_think(t_philo *data)
 			- get_time_since_start(data->common)) / 2;
 	if (time_to_think < 0)
 		time_to_think = 0;
+	if (time_to_think > MAX_TIME_THINK)
+		time_to_think = MAX_TIME_THINK;
 	pthread_mutex_lock(data->common.output);
 	if (!*(data->common.is_dead))
 		printf("%d %d is thinking\n", get_time_since_start(data->common),
